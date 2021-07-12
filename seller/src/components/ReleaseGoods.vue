@@ -1,5 +1,12 @@
 <template>
-  <div>
+<div>
+   <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/outline' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>我要发布</el-breadcrumb-item>
+      <el-breadcrumb-item>发布周边</el-breadcrumb-item>
+    </el-breadcrumb>
+  <el-card class="box-card" shadow="always">
+    
   <div class="note" >
    请填写您将要发布的周边的相关信息噢！ 
   </div>
@@ -21,13 +28,15 @@
 
       <el-form-item label="周边简介" prop="introduction">
        
-      
-      <el-input
-  type="textarea"
-  :rows="4"
-  placeholder="请输入简介"
-  v-model="ruleForm.introduction">
-</el-input>
+      <el-col style="width: 600px">
+          <el-input
+            type="textarea"
+            :rows="4"
+            placeholder="请输入简介"
+            v-model="ruleForm.introduction"
+          >
+          </el-input>
+      </el-col>
 
       </el-form-item>
 
@@ -35,7 +44,7 @@
         <el-input-number
           v-model="price"
           controls-position="right"
-          @change="handleChange4"
+          @change="handleChange1"
           :min="0"
         ></el-input-number>
       </el-form-item>
@@ -53,7 +62,8 @@
         </el-upload>
       </el-form-item>
     </el-form>
-  </div>
+  </el-card>
+</div>
 </template>
 
 <script>
@@ -104,34 +114,6 @@ export default {
             trigger: "blur",
           },
         ],
-        address: [
-          { required: true, message: "请输入演出地址", trigger: "blur" },
-          {
-            min: 1,
-            max: 20,
-            message: "长度在 1 到 20 个字符",
-            trigger: "blur",
-          },
-        ],
-        tag1: [
-          { required: true, message: "请选择一个标签", trigger: "change" },
-        ],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
       },
       imageUrl: "",
     };
@@ -152,15 +134,6 @@ export default {
     },
     handleChange1(value) {
       console.log1(value);
-    },
-    handleChange2(value) {
-      console.log2(value);
-    },
-    handleChange3(value) {
-      console.log3(value);
-    },
-    handleChange4(value) {
-      console.log4(value);
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
@@ -183,6 +156,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.el-card{
+  margin-left:15px;
+  margin-top:15px;
+  margin-right:15px;
+}
 .goods-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -196,7 +175,7 @@ export default {
 .goods-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  background-color: rgba(175, 180, 201, 0.192);
+  background-color: rgba(175, 180, 201, 0.404);
   width: 178px;
   height: 178px;
   line-height: 178px;
