@@ -1,9 +1,9 @@
 <template>
-  <el-card>
+  <el-card shadow="hover">
     <div id="body">
       <span id="photo">
         <a :href="href">
-          <el-image :src="photo_src"  fit="fill" >
+          <el-image :src="'data:image/png;base64,'+image"  fit="fill" >
             <div slot="placeholder" class="image-slot">
               加载中<span class="dot">...</span>
             </div>
@@ -19,13 +19,13 @@
         <div style="line-height: 1.9;">
             <div class="text" style="color: #909399;margin-bottom: 50px"><!--改图片高度这个也要改-->
               <div style="text-align: left">
-                <i class="el-icon-time icon"></i>场次：{{time}}
+                <i class="el-icon-star-off icon"></i>平均评分:{{avgRate}}
               </div>
               <div class="text">
-                <i class="el-icon-location-information icon"></i>地点：{{place}}
+                <i class="el-icon-collection-tag icon"></i>标签:
+                <span v-for="label in labels" :key="label">{{' '+label+' '}}</span>
               </div>
             </div>
-          <span id="price"><i  class="el-icon-money"></i>￥{{price}}起</span><span class="text" style="font-size: 18px;float: left">{{status}}</span><!--起可能没有-->
         </div>
       </span>
     </div>
@@ -37,18 +37,15 @@
 export default {
   name: "searchItem",
   props:{
-    type:String,
-    id:Number,
-    name:String,
-    photo_src:String,//图片超链接，base64的话请更改el-image的:src为其他值
-    time:Date,
-    place:String,
-    price:Number,
-    status:String
+    showId: Number,
+    name: String,
+    image: String,
+    labels:Array,
+    avgRate: Number,
   },
   computed:{
     href:function () {
-      return ""
+      return "/ParticularShow/"+this.showId //得改
     }
   }
 }
@@ -86,6 +83,11 @@ export default {
   line-height: 1.9;
   text-align: left;
 }
+
+#body{
+
+}
+
 .icon{
   color: #3096ff;
 }

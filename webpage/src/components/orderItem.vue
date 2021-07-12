@@ -29,10 +29,28 @@
           <div style="float: right;text-align: right" >
             <div>
               {{status}}
-              <el-divider direction="vertical" v-if="not_comment||not_pay"></el-divider>
-              <a class="text" v-if="not_comment" href="">去评价</a>
-              <a class="text" v-if="not_pay" href="">去支付</a>
-              <a class="text" v-if="commented" href="">有问题？</a>
+              <el-divider direction="vertical" v-if="not_comment"></el-divider>
+              <el-link @click="dialogVisible=true" type="primary" class="text" v-if="not_comment">去评价</el-link>
+              <el-dialog
+                  title="评价"
+                  :visible.sync="dialogVisible"
+                  width="30%"
+                  :before-close="handleClose">
+                  <div>评分:<el-rate
+                      v-model="rating"
+                      colors="colors"></el-rate>
+                  </div>
+                  <el-input
+                      type="textarea"
+                      :rows="2"
+                      placeholder="请输入内容"
+                      v-model="textarea">
+                  </el-input>
+
+                  <span slot="footer" class="dialog-footer">
+                  <el-button type="primary" @click="dialogVisible = false">提交</el-button>
+              </span>
+            </el-dialog>
             </div>
             <div>{{'×'+item_num+'  '+'￥'+price}}</div>
           </div>
@@ -59,6 +77,13 @@
 
 export default {
   name: "orderItem",
+  data(){
+    return{
+      dialogVisible: false,
+      rating:0,
+      textarea:''
+    }
+  },
   props:{//更改props请使用智能更改
     type:String,
     id:Number,
@@ -67,21 +92,21 @@ export default {
     time:Date,
     place:String,
     price:Number,
-    status:String,
+    rate:Number,
     item_num:Number
   },
   computed:{
     not_comment:function () {
-      return this.status==="已观看"
-    },
-    not_pay:function () {
-      return this.status==="未支付"
+      return this.rate===null
     },
     href:function (){//商品信息的超链接
       return ""
-    },
-    commented:function () {
-      return this.status==="已评价"
+    }
+  },
+  methods:{
+    handleClose:function () {
+      //提交评论，同时显示加载中
+      //提交完成反馈
     }
   }
 }

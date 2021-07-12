@@ -1,12 +1,14 @@
 <template>
   <div id="allShows">
-  <div v-if="this.hasShow">
-    {{this.shows}}
+    <el-carousel height="250px" id="carousel">
+      <el-carousel-item v-for="show in shows" :key="show">
+        <el-image :src="'data:image/png;base64,'+show.image"></el-image>
+      </el-carousel-item>
+    </el-carousel>
+    <el-divider></el-divider>
+
   </div>
-  <div v-else>
-    暂无演出
-  </div>
-  </div>
+
 </template>
 
 <script>
@@ -53,5 +55,11 @@ export default
 </script>
 
 <style>
+#carousel{
+  margin: 20px 0 20px 0;
+}
 
+#allShows{
+  padding: 0 30px 0 30px;
+}
 </style>
