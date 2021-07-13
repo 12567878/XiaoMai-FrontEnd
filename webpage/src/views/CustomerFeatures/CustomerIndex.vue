@@ -4,7 +4,7 @@
     <el-header>
         <el-row :gutter="20" type="flex">
              <el-col :span="5">
-               <img alt="logo" src="../../../public/logo.png" width="250px"/>
+               <img alt="logo" src="../../public/logo.png" width="250px"/>
                </el-col>
 
         <el-col :span="4">
@@ -39,7 +39,6 @@
           <el-dropdown-item @click.native="gotoLink('/ResetPassword/'+id.toString())">密码修改</el-dropdown-item>
           <el-dropdown-item @click.native="gotoLink('/NoticeBoard')">查看通知</el-dropdown-item>
           <el-dropdown-item id="logout" @click.native="logout()">退出</el-dropdown-item>
-          <el-dropdown-item id="destroy">注销账户</el-dropdown-item>
         </el-dropdown-menu>
   </el-dropdown>
   <user-reg-login v-else></user-reg-login>
