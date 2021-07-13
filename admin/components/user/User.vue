@@ -23,40 +23,20 @@
         <!-- 用户列表 -->
         <el-table :data="userlist" border stripe>
             <el-table-column type="index" label="#"></el-table-column>
-            <el-table-column  label="姓名"></el-table-column>
-            <el-table-column  label="电话"></el-table-column>
-            <el-table-column  label="id"></el-table-column>
-            <el-table-column  label="状态">
-              <el-tag type="danger" size="mini">不合法</el-tag>
-              <el-tag type="success" size="mini">合法</el-tag>
-            </el-table-column>
-            <el-table-column  label="身份">
-              <el-tag type="danger" size="mini">商家</el-tag>
-              <el-tag type="success" size="mini">用户</el-tag>
-
-            </el-table-column>
+            <el-table-column  label="顾客姓名" prop="userName"></el-table-column>
+            <el-table-column  label="顾客电话" prop="phoneNumber"></el-table-column>
+            <el-table-column  label="顾客id" prop="id"></el-table-column>
+            <el-table-column  label="注册日期" prop="regDate"> </el-table-column>
             <el-table-column label="操作">
-                <template>
-                    <el-button
-                    type="primary"
-                    icon="el-icon-edit"
-                    size="mini"
-                    circle
-                    ></el-button>
+                <template slot-scope="scope">
                     <el-button
                     type="danger"
                     icon="el-icon-delete"
                     size="mini"
                     circle
+                    @click="setDisableCustomerAccount(scope.row.id)"
                     ></el-button>
                     <!--  @click="removeUserById(scope.row.id)" -->
-                    <el-button
-                    type="warning"
-                    icon="el-icon-setting"
-                    size="mini"
-                    circle
-                    ></el-button>
-                    <!--  @click="showSetRole(scope.row)" -->
                 </template>
 
             </el-table-column>
@@ -71,7 +51,8 @@
       </el-pagination>
 
     </el-card>
-    <el-dialog title="添加用户" width="50%" @close="addDialogClosed" :visible.sync="addDialogVisible">
+
+    <el-dialog title="添加用户" width="50%"  :visible.sync="addDialogVisible">
         <el-form
            label-width="100px"
         >
@@ -126,6 +107,7 @@
 
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -140,21 +122,46 @@ export default {
       addDialogVisible: false,
       // 修改用户
       editDialogVisible: false,
-      userlist: []
+      userlist: [],
+      sellerList: []
 
     }
   },
-  method:
+  created: function () {
+    this.getUserlist()
+  },
+
+  methods:
   {
     handleSizeChange (newsize) {
       this.queryInfo.pagesize = newsize
     },
     // 获取用户列表
     async getUserlist () {
-      /* const { data: res } = await this.$http.get('users', {
-        params: this.queryInfo
-      }) */
-
+      const url = '/DisableCustomerAccount'
+      await axios.get(url)
+        .then((res) => {
+          this.userlist = res.data.value
+          console.log(res)
+          console.log(this.userlist)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+    async setDisableCustomerAccount (id) {
+      const url = '/DisableCustomerAccount/' + id
+      await axios.put(url)
+        .then(res => {
+          console.log(res)
+          console.log(id)
+          this.$message.success('封禁顾客账号成功！')
+          window.location.reload()
+        })
+        .catch(err => {
+          console.error(err)
+          this.$message.error('封禁顾客账号失败！')
+        })
     }
 
     /* async deleteUser (id) {

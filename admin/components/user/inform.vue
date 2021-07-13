@@ -21,13 +21,26 @@
         </el-row>
         <el-table :data="noticelist" border stripe>
             <el-table-column type="index" label="#"></el-table-column>
-            <el-table-column  label="编号"></el-table-column>
-            <el-table-column  label="内容"></el-table-column>
-            <el-table-column  label="对象">
-                <el-tag type="danger" size="mini">商家</el-tag>
-              <el-tag type="success" size="mini">用户</el-tag>
+            <el-table-column  label="编号" prop="id"></el-table-column>
+            <el-table-column  label="内容" prop="title"></el-table-column>
+            <el-table-column  label="对象" prop="type">
+                <el-tag type="danger" size="mini" v-if="noticelist.type==1">商家</el-tag>
+              <el-tag type="success" size="mini" >用户</el-tag>
             </el-table-column>
-            <el-table-column  label="操作"></el-table-column>
+            <el-table-column  label="操作">
+              <template slot-scope="scope">
+                <!-- find it -->
+                    <el-button
+                    type="danger"
+                    icon="el-icon-delete"
+                    size="mini"
+                    circle
+                    @click="deleteNotice(scope.row.id)"
+                    ></el-button>
+                    <!--  @click="removeUserById(scope.row.id)" -->
+                </template>
+
+            </el-table-column>
         </el-table>
          <el-pagination
          background
@@ -41,18 +54,27 @@
     <el-form
     label-width="125px"
     >
+       <el-form-item label="标题" v-model="sendnotice">
+          <el-input v-model="sendnotice.title" ></el-input>
+        </el-form-item>
        <el-form-item label="通知内容" >
-          <el-input ></el-input>
+          <el-input
+          type="textarea"
+           autosize
+          placeholder="请输入内容"
+          v-model="sendnotice.content"
+          ></el-input>
         </el-form-item>
         <el-form-item label="发布对象">
             <el-cascader
             :options="userstatus"
+            :v-model="sendnotice.type"
             ></el-cascader>
         </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="sendDialogVisible = false">取 消</el-button>
-            <el-button type="primary" >确 定</el-button>
+            <el-button type="primary"  @click="boardcastNotice">确 定</el-button>
             <!-- @click="addUser" -->
         </span>
 
@@ -61,21 +83,32 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       noticelist: [],
       sendDialogVisible: false,
+      sendnotice: {
+        title: '',
+        content: '',
+        type: 0
+      },
+      deleteID: 0,
       userstatus: [
         // eslint-disable-next-line no-undef
 
         {
-          value: '商家',
+          value: '2',
           label: '商家'
         },
         {
-          value: '用户',
+          value: '1',
           label: '用户'
+        },
+        {
+          value: '0',
+          label: '所有'
         }
 
       ],
@@ -85,8 +118,54 @@ export default {
         pagesize: 10
       }
     }
+  },
+  created: function () {
+    this.showAllNotices()
+  },
+  methods:
+  {
+    async boardcastNotice () {
+      const url = '/BroadcastNotice'
+      await axios.post(url, {title: this.noticelist.title, content: this.noticelist.content, type: this.noticelist.type})
+        .then(
+          (res) => {
+            this.$message.success('发布通知成功！')
+            this.sendDialogVisible = false
+            this.showAllNotices()
+          }
+        ).catch(
+          (err) => {
+            this.$message.error('发布通知失败！')
+            console.log(err)
+          })
+    },
+    async showAllNotices () {
+      const url = '/AdminGetAllNotice'
+      await axios.get(url)
+        .then(res => {
+          this.noticelist = res.data.value
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    async deleteNotice (id) {
+      const url = '/AdminDeleteNotice/' + id
+      await axios.delete(url)
+        .then(res => {
+          console.log(id)
+          this.$message.success('删除通知成功！')
+          console.log(res)
+          window.location.reload()
+        })
+        .catch(err => {
+          this.$message.error('删除通知失败！')
+          console.log(id)
+          console.error(err)
+        })
+    }
   }
-
 }
 </script>
  <style lang="less" scoped>

@@ -8,7 +8,7 @@ import router from './route'
 import './assets/css/global.css'
 import axios from 'axios'
 // 根路径请求连接
-axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/ '
+axios.defaults.baseURL = 'http://8.140.12.78:85/api'
 
 Vue.prototype.$http = axios
 Vue.use(ElementUI)
