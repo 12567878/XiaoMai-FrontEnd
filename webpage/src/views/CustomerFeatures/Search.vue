@@ -36,7 +36,7 @@ export default
   {
     async Search()
     {
-      const url = '/Search/'+this.$route.params.id
+      const url = '/Search/'+this.$route.params.input
       await axios.get(url).then(
         (response) =>
         {
