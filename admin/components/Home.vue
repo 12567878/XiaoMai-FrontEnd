@@ -29,22 +29,15 @@
         </template>
         <el-menu-item index="user">
         <i class="el-icon-menu"></i>
-        <span slot="title">用户列表</span>
+        <span slot="title">顾客列表</span>
+        </el-menu-item>
+        <el-menu-item index="seller">
+        <i class="el-icon-menu"></i>
+        <span slot="title">商家列表</span>
         </el-menu-item>
         <el-menu-item index="send">
         <i class="el-icon-menu"></i>
         <span slot="title">发布通知</span>
-        </el-menu-item>
-
-      </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-s-order"></i>
-          <span>商品管理</span>
-        </template>
-        <el-menu-item index="order">
-        <i class="el-icon-menu"></i>
-        <span slot="title">订单列表</span>
         </el-menu-item>
 
       </el-submenu>
