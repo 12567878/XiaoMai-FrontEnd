@@ -4,7 +4,7 @@
     <el-header>
         <el-row :gutter="20" type="flex">
              <el-col :span="5">
-               <img alt="logo" src="../../../public/logo.png" width="250px"/>
+               <img alt="logo" src="../../public/logo.png" width="250px"/>
                </el-col>
 
         <el-col :span="4">
