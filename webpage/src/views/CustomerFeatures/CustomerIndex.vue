@@ -33,13 +33,12 @@
   <el-dropdown v-if="isLogin()">
         <el-avatar icon="el-icon-user-solid"></el-avatar> <!--以后要换成用户头像-->
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="gotoLink('/CustomerInfoCenter/'+id.toString())">个人中心</el-dropdown-item>
+          <el-dropdown-item @click.native="gotoLink('/CustomerInfoCenter/'+id.toString())">个人信息</el-dropdown-item>
           <el-dropdown-item @click.native="gotoLink('/Orders/'+id.toString())"> 订单管理</el-dropdown-item>
           <el-dropdown-item @click.native="gotoLink('/VIP/'+id.toString())"> 会员管理</el-dropdown-item>
           <el-dropdown-item @click.native="gotoLink('/ResetPassword/'+id.toString())">密码修改</el-dropdown-item>
           <el-dropdown-item @click.native="gotoLink('/NoticeBoard')">查看通知</el-dropdown-item>
           <el-dropdown-item id="logout" @click.native="logout()">退出</el-dropdown-item>
-          <el-dropdown-item id="destroy">注销账户</el-dropdown-item>
         </el-dropdown-menu>
   </el-dropdown>
   <user-reg-login v-else></user-reg-login>
@@ -52,7 +51,7 @@
 
     <el-footer>
         小麦网 Copyright 2021 DB Principle Project
-        <el-button type="text" @click="gotoLink('/BackendLogin')">后台登录/注册</el-button>
+        <el-button type="text" @click="gotoLink('/BackendLogin')" id="backend">后台登录/注册</el-button>
     </el-footer>
   </el-container>
 </el-container>
@@ -141,7 +140,8 @@ name:"CustomerIndex",
   #logout{
     color:red;
   }
-  #destroy{
-    color:red;
+
+  #backend{
+    font-size:7px
   }
 </style>

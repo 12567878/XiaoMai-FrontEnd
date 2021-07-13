@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name:'SellerRegister',
   data(){
@@ -76,9 +77,9 @@ export default {
      submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+           this.Register()
           } else {
-            console.log('error submit!!');
+            console.log('注册失败！');
             return false;
           }
         });
@@ -87,8 +88,26 @@ export default {
       {
         this.$refs[formName].resetFields();
       },
-      
-      
+      async Register()
+      {
+        const url = '/SignUp'
+        await axios.post(url,{userName:this.SellerRegister.sellerName,password:this.SellerRegister.password,userType:'SELLER'})
+        .then(
+           (response) =>
+          {
+            this.$message.success("注册成功！您的账号是"+response.data)
+            this.$router.push('/BackendLogin')
+          }
+        ).catch(
+          (err) =>
+          {
+            this.$message.error("未知错误！")
+            console.log(err)
+          }
+        )
+        
+        
+      }
   }
   }
 </script>

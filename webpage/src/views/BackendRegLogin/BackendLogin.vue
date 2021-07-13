@@ -92,6 +92,10 @@ export default {
         {
           this.$message.success('登录成功！')
           this.$router.push("/Sellerhome/"+this.user.id.toString())
+          sessionStorage.setItem('selId',this.user.id.toString())
+          sessionStorage.setItem(this.user.id.toString(),response.data)
+          sessionStorage.setItem('isLogin',true)
+          sessionStorage.setItem('userType','S')
         }
       ).catch(
         (err) =>{
@@ -109,7 +113,10 @@ export default {
         (response) =>
         {
           this.$message.success('登录成功！')
-          // this.$router.push("/Sellerhome/"+this.user.id.toString())
+          sessionStorage.setItem('admId',this.user.id.toString())
+          sessionStorage.setItem(this.user.id.toString(),response.data)
+          sessionStorage.setItem('isLogin',true)
+          sessionStorage.setItem('userType','A')
         }
       ).catch(
         (err) =>{
