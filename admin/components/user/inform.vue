@@ -43,6 +43,9 @@
             </el-table-column>
         </el-table>
          <el-pagination
+          @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="queryInfo.pagesize"
          background
          layout="total, sizes, prev, pager, next, jumper"
          :page-sizes="[2, 5, 10, 15]"
@@ -54,6 +57,9 @@
     <el-form
     label-width="125px"
     >
+        <el-form-item label="编号" v-model="sendnotice">
+          <el-input v-model="sendnotice.id" ></el-input>
+        </el-form-item>
        <el-form-item label="标题" v-model="sendnotice">
           <el-input v-model="sendnotice.title" ></el-input>
         </el-form-item>
@@ -92,7 +98,8 @@ export default {
       sendnotice: {
         title: '',
         content: '',
-        type: 0
+        type: 0,
+        id: 0
       },
       deleteID: 0,
       userstatus: [
@@ -124,6 +131,15 @@ export default {
   },
   methods:
   {
+    handleSizeChange (newsize) {
+      this.queryInfo.pagesize = newsize
+      this.getUserlist()
+    },
+    handleCurrentChange (newSize) {
+      // console.log(newSize)
+      this.queryInfo.pagenum = newSize
+      this.getUserlist()
+    },
     async boardcastNotice () {
       const url = '/BroadcastNotice'
       await axios.post(url, {title: this.noticelist.title, content: this.noticelist.content, type: this.noticelist.type})

@@ -47,6 +47,9 @@
         </el-table>
         <!-- 分页 -->
         <el-pagination
+         @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="queryInfo.pagesize"
          background
          layout="total, sizes, prev, pager, next, jumper"
          :page-sizes="[2, 5, 10, 15]"
@@ -63,10 +66,26 @@ export default {
 
   data () {
     return {
+      queryInfo: {
+        query: '',
+        // 当前页数
+        pagenum: 1,
+        // 每页显示多少数据
+        pagesize: 5
+      },
       sellerList: []
     }
   },
   methods: {
+    handleSizeChange (newsize) {
+      this.queryInfo.pagesize = newsize
+      this.getUserlist()
+    },
+    handleCurrentChange (newSize) {
+      // console.log(newSize)
+      this.queryInfo.pagenum = newSize
+      this.getUserlist()
+    },
     async getSellerlist () {
       const url = '/DisableSellerAccount'
       await axios.get(url)
