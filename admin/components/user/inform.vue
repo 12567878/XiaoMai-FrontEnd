@@ -22,9 +22,10 @@
         <el-table :data="noticelist" border stripe>
             <el-table-column type="index" label="#"></el-table-column>
             <el-table-column  label="编号" prop="id"></el-table-column>
-            <el-table-column  label="内容" prop="title"></el-table-column>
+            <el-table-column  label="标题" prop="title"></el-table-column>
+            <el-table-column  label="内容" prop="content"></el-table-column>
             <el-table-column  label="对象" prop="type">
-                <el-tag type="danger" size="mini" v-if="noticelist.type==1">商家</el-tag>
+                <el-tag type="danger" size="mini">商家</el-tag>
               <el-tag type="success" size="mini" >用户</el-tag>
             </el-table-column>
             <el-table-column  label="操作">
@@ -43,6 +44,9 @@
             </el-table-column>
         </el-table>
          <el-pagination
+          @size-change="handleSizeChange"
+         @current-change="handleCurrentChange"
+        :page-size="queryInfo.pagesize"
          background
          layout="total, sizes, prev, pager, next, jumper"
          :page-sizes="[2, 5, 10, 15]"
@@ -54,6 +58,9 @@
     <el-form
     label-width="125px"
     >
+        <el-form-item label="编号" v-model="sendnotice">
+          <el-input v-model="sendnotice.id" ></el-input>
+        </el-form-item>
        <el-form-item label="标题" v-model="sendnotice">
           <el-input v-model="sendnotice.title" ></el-input>
         </el-form-item>
@@ -92,8 +99,10 @@ export default {
       sendnotice: {
         title: '',
         content: '',
-        type: 0
+        type: 0,
+        id: 0
       },
+      totle: 0,
       deleteID: 0,
       userstatus: [
         // eslint-disable-next-line no-undef
@@ -124,9 +133,19 @@ export default {
   },
   methods:
   {
+    handleSizeChange (newsize) {
+      console.log(newsize)
+      this.queryInfo.pagesize = newsize
+      this.showAllNotices()
+    },
+    handleCurrentChange (newSize) {
+      console.log(newSize)
+      this.queryInfo.pagenum = newSize
+      this.showAllNotices()
+    },
     async boardcastNotice () {
       const url = '/BroadcastNotice'
-      await axios.post(url, {title: this.noticelist.title, content: this.noticelist.content, type: this.noticelist.type})
+      await axios.post(url, {id: this.sendnotice.id, title: this.sendnotice.title, content: this.sendnotice.content, type: this.sendnotice.type})
         .then(
           (res) => {
             this.$message.success('发布通知成功！')

@@ -75,11 +75,11 @@ export default {
       this.$refs.loginformref.resetFields()
     },
     login () {
-      /* this.$$refs.loginformref.validate(valid => {
+      this.$$refs.loginformref.validate(valid => {
         // eslint-disable-next-line semi
         if (!valid) return;
         this.$http.post('login', this.loginForm)
-      }) */
+      })
       this.$router.push('/home')
       this.$message.success('登录成功')
     }

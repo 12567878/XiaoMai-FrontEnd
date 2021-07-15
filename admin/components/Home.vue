@@ -20,6 +20,7 @@
       background-color="#373f41"
       text-color="#fff"
       active-text-color="#ffd04b"
+      :default-active="$route.path"
       :router="true">
       <el-submenu index="1">
           <!-- 一级菜单模板 -->
@@ -27,15 +28,15 @@
           <i class="el-icon-s-custom"></i>
           <span>用户管理</span>
         </template>
-        <el-menu-item index="user">
+        <el-menu-item index="/user">
         <i class="el-icon-menu"></i>
         <span slot="title">顾客列表</span>
         </el-menu-item>
-        <el-menu-item index="seller">
+        <el-menu-item index="/seller">
         <i class="el-icon-menu"></i>
         <span slot="title">商家列表</span>
         </el-menu-item>
-        <el-menu-item index="send">
+        <el-menu-item index="/send">
         <i class="el-icon-menu"></i>
         <span slot="title">发布通知</span>
         </el-menu-item>
@@ -46,7 +47,7 @@
           <i class="el-icon-edit-outline"></i>
           <span>评论管理</span>
         </template>
-        <el-menu-item index="discuss">
+        <el-menu-item index="/discuss">
         <i class="el-icon-menu"></i>
         <span slot="title">评论列表</span>
         </el-menu-item>

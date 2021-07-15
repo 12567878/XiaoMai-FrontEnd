@@ -44,6 +44,9 @@
         </el-table>
         <!-- 分页 -->
         <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="queryInfo.pagesize"
          background
          layout="total, sizes, prev, pager, next, jumper"
          :page-sizes="[2, 5, 10, 15]"
@@ -135,6 +138,12 @@ export default {
   {
     handleSizeChange (newsize) {
       this.queryInfo.pagesize = newsize
+      this.getUserlist()
+    },
+    handleCurrentChange (newSize) {
+      // console.log(newSize)
+      this.queryInfo.pagenum = newSize
+      this.getUserlist()
     },
     // 获取用户列表
     async getUserlist () {
