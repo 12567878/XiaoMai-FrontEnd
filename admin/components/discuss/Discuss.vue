@@ -77,12 +77,12 @@ export default {
   {
     handleSizeChange (newsize) {
       this.queryInfo.pagesize = newsize
-      this.getUserlist()
+      this.showAllComments()
     },
     handleCurrentChange (newSize) {
       // console.log(newSize)
       this.queryInfo.pagenum = newSize
-      this.getUserlist()
+      this.showAllComments()
     },
     async showAllComments () {
       const url = '/DeleteComment'
@@ -104,6 +104,7 @@ export default {
           console.log(id)
           console.log(res)
           this.$message.success('删除评论成功！')
+          this.showAllComments()
         })
         .catch(err => {
           console.log(id)

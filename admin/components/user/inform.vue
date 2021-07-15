@@ -101,6 +101,7 @@ export default {
         type: 0,
         id: 0
       },
+      totle: 0,
       deleteID: 0,
       userstatus: [
         // eslint-disable-next-line no-undef
@@ -133,12 +134,12 @@ export default {
   {
     handleSizeChange (newsize) {
       this.queryInfo.pagesize = newsize
-      this.getUserlist()
+      this.showAllNotices()
     },
     handleCurrentChange (newSize) {
       // console.log(newSize)
       this.queryInfo.pagenum = newSize
-      this.getUserlist()
+      this.showAllNotices()
     },
     async boardcastNotice () {
       const url = '/BroadcastNotice'

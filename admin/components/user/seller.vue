@@ -79,12 +79,12 @@ export default {
   methods: {
     handleSizeChange (newsize) {
       this.queryInfo.pagesize = newsize
-      this.getUserlist()
+      this.getSellerlist()
     },
     handleCurrentChange (newSize) {
       // console.log(newSize)
       this.queryInfo.pagenum = newSize
-      this.getUserlist()
+      this.getSellerlist()
     },
     async getSellerlist () {
       const url = '/DisableSellerAccount'
